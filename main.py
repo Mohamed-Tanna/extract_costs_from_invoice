@@ -37,8 +37,11 @@ def get_all_costs(tables):
         keys = list(table.keys())
         start_column = get_key_after(keys, 'CITY &')
         if start_column is not None:
-            result = table.loc[1, start_column:keys[len(keys) - 1]].to_dict()
-            return clean_costs_result(result)
+            number_of_rows = len(table)
+            for i in range(0, number_of_rows):
+                result = table.loc[i, start_column:keys[len(keys) - 1]].to_dict()
+                if does_it_have_costs(result):
+                    return clean_costs_result(result)
     return {}
 
 
